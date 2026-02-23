@@ -26,7 +26,7 @@
      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
 
   /** Default event date (ISO 8601 with UTC offset). */
-  var DEFAULT_ISO = '2026-03-14T19:00:00+01:00';
+  var DEFAULT_ISO = '2026-02-27T19:00:00+01:00';
 
   /** localStorage key for the registered fragment code. */
   var LS_KEY = 'dbe_fragmentCode';
@@ -281,21 +281,6 @@
   if (modal) {
     modal.addEventListener('close', function () {
       if (btnOpen) btnOpen.focus();
-    });
-  }
-
-
-  /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-     "Details?" — smooth scroll to hints section
-     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
-
-  var btnDetails = document.getElementById('btn-details');
-  if (btnDetails) {
-    btnDetails.addEventListener('click', function () {
-      var hinweise = document.getElementById('hinweise');
-      if (hinweise) {
-        hinweise.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }
     });
   }
 
