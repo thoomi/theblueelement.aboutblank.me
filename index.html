@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Eine Einladung. Ein Fragment. Eine Verwandlung.">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#08080f">
+  <title>Das blaue Element</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- Glow overlay — transitions to visible when the event begins -->
+  <div class="glow-overlay" aria-hidden="true"></div>
+
+  <!-- ═══════════════════════════════════════════
+       HERO
+       ═══════════════════════════════════════════ -->
+  <header class="hero">
+    <div class="container">
+
+      <!-- Abstract fragment shape — decorative only -->
+      <div class="fragment-mark" aria-hidden="true">
+        <svg viewBox="0 0 100 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <polygon
+            points="50,4 94,28 84,88 50,114 8,86 6,36"
+            fill="currentColor" fill-opacity="0.04"
+            stroke="currentColor" stroke-width="0.8" stroke-opacity="0.8"
+          />
+          <!-- Facet lines suggesting a cut crystal -->
+          <line x1="50" y1="4"  x2="8"  y2="86" stroke="currentColor" stroke-width="0.35" stroke-opacity="0.35"/>
+          <line x1="94" y1="28" x2="6"  y2="36" stroke="currentColor" stroke-width="0.3"  stroke-opacity="0.25"/>
+        </svg>
+      </div>
+
+      <h1 class="headline" id="site-title">Das blaue Element</h1>
+      <p class="subline">Eine Einladung. Ein Fragment. Eine Verwandlung.</p>
+
+      <nav class="hero-actions" aria-label="Hauptaktionen">
+        <button
+          class="btn btn-primary"
+          id="btn-register"
+          aria-haspopup="dialog"
+          aria-controls="fragment-modal"
+        >Fragment registrieren</button>
+
+        <button
+          class="btn btn-secondary"
+          id="btn-details"
+          aria-controls="hinweise"
+        >Details?</button>
+      </nav>
+
+    </div>
+  </header>
+
+
+  <!-- ═══════════════════════════════════════════
+       COUNTDOWN
+       ═══════════════════════════════════════════ -->
+  <section id="countdown" class="section section-countdown" aria-labelledby="countdown-heading">
+    <div class="container">
+
+      <!-- Visually hidden heading for screen readers -->
+      <h2 id="countdown-heading" class="sr-only">Countdown zum Ereignis</h2>
+
+      <!-- countdown-display is replaced wholesale when the event begins -->
+      <div id="countdown-display">
+
+        <!-- Timer cells — aria-live="off" avoids spamming screen readers every second -->
+        <div
+          class="countdown-cells"
+          role="timer"
+          aria-live="off"
+          aria-label="Verbleibende Zeit"
+        >
+          <div class="countdown-cell">
+            <span class="cd-val" id="cd-days">--</span>
+            <span class="cd-label" aria-hidden="true">Tage</span>
+          </div>
+          <span class="cd-sep" aria-hidden="true">:</span>
+
+          <div class="countdown-cell">
+            <span class="cd-val" id="cd-hours">--</span>
+            <span class="cd-label" aria-hidden="true">Stunden</span>
+          </div>
+          <span class="cd-sep" aria-hidden="true">:</span>
+
+          <div class="countdown-cell">
+            <span class="cd-val" id="cd-minutes">--</span>
+            <span class="cd-label" aria-hidden="true">Minuten</span>
+          </div>
+          <span class="cd-sep" aria-hidden="true">:</span>
+
+          <div class="countdown-cell">
+            <span class="cd-val" id="cd-seconds">--</span>
+            <span class="cd-label" aria-hidden="true">Sekunden</span>
+          </div>
+        </div>
+
+        <!-- Updated every ~30 s so screen readers get a periodic announcement -->
+        <p class="sr-only" id="countdown-sr" aria-live="polite" aria-atomic="true"></p>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════════
+       CRYPTIC HINTS
+       ═══════════════════════════════════════════ -->
+  <section id="hinweise" class="section section-hints" aria-label="Hinweise">
+    <div class="container">
+      <ul class="hints-list">
+        <li class="hint">Ein Element verbindet alles.</li>
+        <li class="hint">Farbe ist nur der Anfang.</li>
+        <li class="hint">Ein Impuls verändert die Richtung.</li>
+        <li class="hint">Bring dein Fragment mit.</li>
+        <li class="hint">Manche Dinge offenbaren sich erst in der Mitte.</li>
+      </ul>
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════════
+       ARRIVAL
+       ═══════════════════════════════════════════ -->
+  <section id="ankunft" class="section section-arrival" aria-label="Ankunft">
+    <div class="container">
+      <div class="arrival-block">
+        <!-- Date and time are populated by app.js from the target parameter -->
+        <p class="arrival-date" id="arrival-date">—</p>
+        <p class="arrival-time" id="arrival-time">—</p>
+        <ul class="arrival-mood" aria-label="Hinweise zur Ankunft">
+          <li>pünktlich.</li>
+          <li>offen für überraschungen.</li>
+          <li>ein blaues detail ist willkommen.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════════
+       FOOTER
+       ═══════════════════════════════════════════ -->
+  <footer class="footer">
+    <div class="container">
+      <!-- Smaller echo of the fragment mark -->
+      <div class="footer-fragment" aria-hidden="true">
+        <svg viewBox="0 0 100 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <polygon
+            points="50,4 94,28 84,88 50,114 8,86 6,36"
+            fill="currentColor" fill-opacity="0.02"
+            stroke="currentColor" stroke-width="0.8" stroke-opacity="1"
+          />
+        </svg>
+      </div>
+      <p class="footer-note">Weitere Informationen werden nicht digital geteilt.</p>
+    </div>
+  </footer>
+
+
+  <!-- ═══════════════════════════════════════════
+       FRAGMENT REGISTRATION MODAL
+       Uses native <dialog> for built-in ESC handling and focus trap
+       ═══════════════════════════════════════════ -->
+  <dialog
+    id="fragment-modal"
+    aria-labelledby="modal-title"
+    aria-describedby="modal-desc"
+  >
+    <div class="modal-inner">
+
+      <button
+        class="modal-close"
+        id="btn-modal-close"
+        aria-label="Modal schließen"
+      >&#x2715;</button>
+
+      <!-- Fragment icon inside the modal -->
+      <div class="modal-fragment-icon" aria-hidden="true">
+        <svg viewBox="0 0 100 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <polygon
+            points="50,4 94,28 84,88 50,114 8,86 6,36"
+            fill="currentColor" fill-opacity="0.06"
+            stroke="currentColor" stroke-width="0.8" stroke-opacity="0.75"
+          />
+          <line x1="50" y1="4" x2="8" y2="86"
+                stroke="currentColor" stroke-width="0.35" stroke-opacity="0.35"/>
+        </svg>
+      </div>
+
+      <h2 id="modal-title">Fragment registrieren</h2>
+      <p id="modal-desc" class="modal-desc">
+        Gib deinen persönlichen Fragment-Code ein.
+      </p>
+
+      <div class="modal-form">
+        <input
+          type="text"
+          id="fragment-input"
+          class="fragment-input"
+          maxlength="8"
+          autocomplete="off"
+          spellcheck="false"
+          autocapitalize="characters"
+          inputmode="text"
+          placeholder="XXXXXX"
+          aria-label="Fragment-Code, 6 bis 8 Zeichen, A bis Z und 0 bis 9"
+        >
+        <button class="btn btn-primary btn-full" id="btn-fragment-submit">
+          Bestätigen
+        </button>
+      </div>
+
+      <!-- aria-live region for validation feedback -->
+      <p
+        class="modal-feedback"
+        id="modal-feedback"
+        role="status"
+        aria-live="polite"
+        aria-atomic="true"
+      ></p>
+
+    </div>
+  </dialog>
+
+
+  <script src="app.js"></script>
+</body>
+</html>

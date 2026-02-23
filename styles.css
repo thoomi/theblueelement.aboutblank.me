@@ -1,0 +1,574 @@
+/* =====================================================================
+   DAS BLAUE ELEMENT — styles.css
+   Fully static, no external dependencies.
+   ===================================================================== */
+
+
+/* ─── Custom Properties ───────────────────────────────────────────────── */
+
+:root {
+  --bg:            #08080f;
+  --surface:       #0d0d1a;
+  --accent:        #3a7bd5;
+  --accent-dim:    rgba(58, 123, 213, 0.12);
+  --accent-glow:   rgba(58, 123, 213, 0.28);
+  --accent-border: rgba(58, 123, 213, 0.22);
+  --text:          #b8b8cc;
+  --text-dim:      #52526e;
+  --text-bright:   #e2e2f0;
+  --border:        rgba(58, 123, 213, 0.16);
+  --radius:        3px;
+  --max-w:         960px;
+  --gap:           clamp(4rem, 10vh, 7rem);
+}
+
+
+/* ─── Reset ───────────────────────────────────────────────────────────── */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+  color-scheme: dark;
+}
+
+body {
+  font-family: ui-sans-serif, system-ui, -apple-system,
+    BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.65;
+  min-height: 100dvh;
+  overflow-x: hidden;
+}
+
+
+/* ─── Background drift ────────────────────────────────────────────────── */
+
+/* Slow, almost imperceptible gradient that drifts across the dark canvas */
+body::before {
+  content: '';
+  position: fixed;
+  inset: -15%;
+  background:
+    radial-gradient(ellipse 55% 45% at 22% 58%,
+      rgba(58, 123, 213, 0.07) 0%, transparent 70%),
+    radial-gradient(ellipse 40% 55% at 78% 18%,
+      rgba(58, 123, 213, 0.05) 0%, transparent 65%),
+    radial-gradient(ellipse 50% 40% at 55% 82%,
+      rgba(25, 70, 150, 0.04) 0%, transparent 60%);
+  animation: drift 34s ease-in-out infinite alternate;
+  pointer-events: none;
+  z-index: 0;
+  will-change: transform;
+}
+
+@keyframes drift {
+  0%   { transform: translate(  0%,     0%)   scale(1.00); }
+  20%  { transform: translate( -1.2%,   0.8%) scale(1.01); }
+  45%  { transform: translate(  0.8%,  -0.5%) scale(0.99); }
+  70%  { transform: translate( -0.4%,   1.2%) scale(1.02); }
+  100% { transform: translate(  1.5%,  -0.8%) scale(1.01); }
+}
+
+
+/* ─── Glow overlay (event-started state) ─────────────────────────────── */
+
+/* Activated by JS adding .event-started to <body> when countdown hits zero */
+.glow-overlay {
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(
+    ellipse 90% 90% at 50% 45%,
+    rgba(58, 123, 213, 0.22) 0%,
+    transparent 65%
+  );
+  opacity: 0;
+  pointer-events: none;
+  z-index: 0;
+  transition: opacity 5s ease;
+}
+
+body.event-started .glow-overlay {
+  opacity: 1;
+}
+
+
+/* ─── Layout ──────────────────────────────────────────────────────────── */
+
+.container {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 0 clamp(1.5rem, 5vw, 3rem);
+  position: relative;
+  z-index: 1;
+}
+
+.section {
+  padding: var(--gap) 0;
+}
+
+
+/* ─── Screen-reader only ──────────────────────────────────────────────── */
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+
+/* ─── Fragment SVG mark ───────────────────────────────────────────────── */
+
+.fragment-mark {
+  width: clamp(52px, 9vw, 80px);
+  margin: 0 auto clamp(2.5rem, 5vw, 4rem);
+  color: var(--accent);
+  opacity: 0.65;
+  animation: frag-pulse 9s ease-in-out infinite;
+}
+
+@keyframes frag-pulse {
+  0%, 100% { opacity: 0.42; }
+  50%       { opacity: 0.72; }
+}
+
+
+/* ─── Hero ────────────────────────────────────────────────────────────── */
+
+.hero {
+  padding: clamp(5rem, 14vh, 10rem) 0 var(--gap);
+  text-align: center;
+}
+
+.headline {
+  font-size: clamp(2.2rem, 7.5vw, 4.8rem);
+  font-weight: 300;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--text-bright);
+  line-height: 1.1;
+  margin-bottom: 1.5rem;
+}
+
+.subline {
+  font-size: clamp(0.85rem, 2.2vw, 1.05rem);
+  letter-spacing: 0.1em;
+  color: var(--text-dim);
+  margin-bottom: clamp(2.5rem, 6vw, 4rem);
+}
+
+.hero-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+
+/* ─── Buttons ─────────────────────────────────────────────────────────── */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem 2rem;
+  font-family: inherit;
+  font-size: 0.8rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  cursor: pointer;
+  border-radius: var(--radius);
+  transition: background 0.25s, border-color 0.25s, box-shadow 0.25s, color 0.25s;
+  white-space: nowrap;
+  -webkit-font-smoothing: antialiased;
+}
+
+.btn:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+.btn-primary {
+  background: transparent;
+  border: 1px solid var(--accent);
+  color: var(--accent);
+}
+
+.btn-primary:hover {
+  background: var(--accent-dim);
+  box-shadow: 0 0 24px var(--accent-glow);
+}
+
+.btn-secondary {
+  background: transparent;
+  border: 1px solid var(--accent-border);
+  color: var(--text-dim);
+}
+
+.btn-secondary:hover {
+  border-color: rgba(58, 123, 213, 0.45);
+  color: var(--text);
+}
+
+.btn-full {
+  width: 100%;
+}
+
+
+/* ─── Countdown ───────────────────────────────────────────────────────── */
+
+.section-countdown {
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  background: rgba(13, 13, 26, 0.55);
+  text-align: center;
+}
+
+/* Baseline-aligned flex row so values and colons share the same baseline */
+.countdown-cells {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: clamp(0.2rem, 1.5vw, 0.8rem);
+  flex-wrap: nowrap;
+}
+
+.countdown-cell {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.55rem;
+}
+
+.cd-val {
+  font-size: clamp(1.8rem, 10vw, 5.5rem);
+  font-weight: 200;
+  color: var(--text-bright);
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+  white-space: nowrap;
+  min-width: 2ch;
+  text-align: center;
+}
+
+.cd-sep {
+  font-size: clamp(1.2rem, 6vw, 3.5rem);
+  font-weight: 200;
+  color: var(--accent);
+  opacity: 0.38;
+  white-space: nowrap;
+  /* Slight downward nudge so the colon sits at the optical center of the digit */
+  position: relative;
+  top: -0.06em;
+}
+
+.cd-label {
+  font-size: clamp(0.55rem, 1.4vw, 0.62rem);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  white-space: nowrap;
+}
+
+/* "Es beginnt." — replaces the countdown grid */
+.started-text {
+  font-size: clamp(1.8rem, 5vw, 3rem);
+  font-weight: 200;
+  letter-spacing: 0.22em;
+  color: var(--accent);
+  text-align: center;
+  padding: 0.25rem 0;
+  animation: started-glow 2.5s ease-in-out infinite;
+}
+
+@keyframes started-glow {
+  0%, 100% { text-shadow: 0 0 28px rgba(58, 123, 213, 0.4); }
+  50%       { text-shadow: 0 0 55px rgba(58, 123, 213, 0.75); }
+}
+
+
+/* ─── Cryptic hints ───────────────────────────────────────────────────── */
+
+.section-hints {
+  text-align: center;
+}
+
+.hints-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(1.4rem, 4vw, 2.2rem);
+  max-width: 640px;
+  margin: 0 auto;
+}
+
+.hint {
+  font-size: clamp(1rem, 2.8vw, 1.3rem);
+  font-weight: 300;
+  letter-spacing: 0.05em;
+  color: var(--text);
+}
+
+.hint::before {
+  content: '—';
+  color: var(--accent);
+  opacity: 0.48;
+  margin-right: 0.7em;
+}
+
+
+/* ─── Arrival ─────────────────────────────────────────────────────────── */
+
+.section-arrival {
+  text-align: center;
+  border-top: 1px solid var(--border);
+}
+
+.arrival-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.arrival-date {
+  font-size: clamp(0.95rem, 2.5vw, 1.3rem);
+  font-weight: 300;
+  letter-spacing: 0.1em;
+  color: var(--text);
+  text-transform: capitalize;
+}
+
+.arrival-time {
+  font-size: clamp(2.2rem, 6vw, 3.5rem);
+  font-weight: 200;
+  letter-spacing: 0.06em;
+  color: var(--accent);
+  line-height: 1.2;
+  margin: 0.3rem 0;
+}
+
+.arrival-mood {
+  list-style: none;
+  margin-top: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+
+.arrival-mood li {
+  font-size: 0.88rem;
+  letter-spacing: 0.08em;
+  color: var(--text-dim);
+  font-style: italic;
+}
+
+
+/* ─── Footer ──────────────────────────────────────────────────────────── */
+
+.footer {
+  padding: 3.5rem 0 2.5rem;
+  text-align: center;
+  border-top: 1px solid var(--border);
+}
+
+.footer-fragment {
+  width: 26px;
+  margin: 0 auto 1.5rem;
+  color: var(--accent);
+  opacity: 0.18;
+}
+
+.footer-note {
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  color: var(--text-dim);
+}
+
+
+/* ─── Dialog / Modal ──────────────────────────────────────────────────── */
+
+dialog {
+  /* Reset browser defaults */
+  position: fixed;
+  inset: 0;
+  margin: auto;
+  width: min(460px, 92vw);
+  max-height: 90dvh;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 0;
+  color: var(--text);
+  overflow: auto;
+  box-shadow:
+    0 0 0 1px rgba(58, 123, 213, 0.08),
+    0 0 60px rgba(58, 123, 213, 0.12),
+    0 24px 80px rgba(0, 0, 0, 0.6);
+}
+
+dialog::backdrop {
+  background: rgba(6, 6, 12, 0.88);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+}
+
+/* Explicit display rules for browsers that need them */
+dialog[open] {
+  display: block;
+}
+
+.modal-inner {
+  padding: clamp(2rem, 5vw, 2.5rem);
+  position: relative;
+}
+
+.modal-close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: none;
+  border: 1px solid transparent;
+  color: var(--text-dim);
+  font-size: 1.1rem;
+  cursor: pointer;
+  width: 2rem;
+  height: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius);
+  transition: color 0.2s, border-color 0.2s;
+  line-height: 1;
+}
+
+.modal-close:hover {
+  color: var(--text);
+  border-color: var(--accent-border);
+}
+
+.modal-close:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.modal-fragment-icon {
+  width: 36px;
+  margin: 0 auto 1.5rem;
+  color: var(--accent);
+  opacity: 0.52;
+}
+
+#modal-title {
+  font-size: 1.05rem;
+  font-weight: 300;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-bright);
+  text-align: center;
+  margin-bottom: 0.5rem;
+}
+
+.modal-desc {
+  font-size: 0.82rem;
+  color: var(--text-dim);
+  text-align: center;
+  margin-bottom: 2rem;
+  letter-spacing: 0.04em;
+}
+
+.modal-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.875rem;
+}
+
+.fragment-input {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--accent-border);
+  border-radius: var(--radius);
+  color: var(--text-bright);
+  font-family: ui-monospace, "Cascadia Code", "Fira Code", "Courier New", monospace;
+  font-size: 1.4rem;
+  letter-spacing: 0.35em;
+  padding: 0.8rem 1rem;
+  text-align: center;
+  text-transform: uppercase;
+  width: 100%;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  caret-color: var(--accent);
+}
+
+.fragment-input:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 16px rgba(58, 123, 213, 0.18);
+}
+
+.fragment-input::placeholder {
+  color: var(--text-dim);
+  opacity: 0.4;
+  letter-spacing: 0.25em;
+}
+
+.modal-feedback {
+  min-height: 1.4rem;
+  text-align: center;
+  font-size: 0.88rem;
+  letter-spacing: 0.06em;
+  margin-top: 0.75rem;
+  color: var(--accent);
+  font-style: italic;
+  transition: opacity 0.3s;
+}
+
+.modal-feedback:empty {
+  opacity: 0;
+}
+
+.modal-feedback.is-error {
+  color: var(--text-dim);
+  font-style: normal;
+}
+
+
+/* ─── Reduced motion ──────────────────────────────────────────────────── */
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  body::before {
+    animation: none;
+  }
+
+  .fragment-mark {
+    animation: none;
+    opacity: 0.52;
+  }
+
+  .started-text {
+    animation: none;
+  }
+
+  .btn,
+  .fragment-input,
+  .modal-close,
+  .glow-overlay {
+    transition: none;
+  }
+}
