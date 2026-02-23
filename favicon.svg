@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <!-- Dark background tile -->
+  <rect width="32" height="32" rx="5" fill="#08080f"/>
+  <!-- Fragment shard (scaled from the site's 100×120 viewBox) -->
+  <polygon
+    points="16,3 26.4,8.7 24,22.9 16,29 6.1,22.4 5.6,10.6"
+    fill="#3a7bd5" fill-opacity="0.22"
+    stroke="#4a8be0" stroke-width="1.5" stroke-linejoin="round"
+  />
+  <!-- Facet lines -->
+  <line x1="16"   y1="3"    x2="6.1"  y2="22.4" stroke="#4a8be0" stroke-width="0.7" stroke-opacity="0.55"/>
+  <line x1="26.4" y1="8.7"  x2="5.6"  y2="10.6" stroke="#4a8be0" stroke-width="0.6" stroke-opacity="0.42"/>
+</svg>
