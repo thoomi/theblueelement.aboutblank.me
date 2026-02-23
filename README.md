@@ -18,11 +18,48 @@ app.js       — countdown, fragment modal, URL parameter handling
 
 ## Local development
 
+### Quick start (no setup)
+
 ```bash
 python3 -m http.server 8080
 ```
 
 Open **http://localhost:8080** — then `Ctrl+C` to stop.
+
+### With a virtual environment (livereload)
+
+Using a venv keeps the dev dependency isolated and gives you automatic
+browser refresh on every file save.
+
+```bash
+# Create and activate the venv
+python3 -m venv .venv
+source .venv/bin/activate      # Windows: .venv\Scripts\activate
+
+# Install livereload
+pip install livereload
+
+# Start the dev server
+python3 -c "
+from livereload import Server
+server = Server()
+server.watch('*.html')
+server.watch('*.css')
+server.watch('*.js')
+server.serve(port=8080, root='.')
+"
+```
+
+Open **http://localhost:8080** — the browser refreshes automatically whenever
+`index.html`, `styles.css`, or `app.js` is saved.
+
+To deactivate the venv when done:
+
+```bash
+deactivate
+```
+
+`.venv/` is intentionally not committed — add it to `.gitignore` if needed.
 
 ---
 
