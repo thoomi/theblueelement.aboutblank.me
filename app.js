@@ -36,12 +36,17 @@
    * Unrecognised valid codes receive the generic fallback message.
    */
   var CODE_MAP = {
-    'BLAU01': 'Das erste Fragment ist erkannt.',
-    'AZUR77': 'Deine Farbe ist bekannt.',
-    'TIEFE8': 'Du kommst aus der Tiefe.',
-    'MOND42': 'Das Licht folgt dir.',
-    'KOBALT': 'Die Schicht ist vollständig.',
+    'XZ7B4N': 'Das erste Zeichen ist gesetzt.',
+    'KV3T9L': 'Die Tiefe hat dich erkannt.',
+    'NW8Z2R': 'Du trägst das richtige Licht.',
+    '4JT7VK': 'Das Muster schließt sich.',
   };
+
+  /**
+   * Shared detail line shown to all recognised codes after the personal confirmation.
+   * ← Replace this string with the real venue / address / instruction before sending.
+   */
+  var SHARED_DETAIL = 'Trag ein blaues Detail — Hemd, Schmuck, Accessoire.';
 
   /** Valid code: 6–8 uppercase alphanumeric characters. */
   var FRAGMENT_RE = /^[A-Z0-9]{6,8}$/;
@@ -194,7 +199,7 @@
     var saved = localStorage.getItem(LS_KEY);
     if (saved && inputEl) {
       inputEl.value = saved;
-      setFeedback('Fragment bereits registriert.', false);
+      setFeedback('Dieses Fragment wurde bereits hinterlegt.', false);
     } else {
       if (inputEl) inputEl.value = '';
       clearFeedback();
@@ -215,9 +220,13 @@
     if (btnOpen) btnOpen.focus();
   }
 
-  function setFeedback(msg, isError) {
+  function setFeedback(msg, isError, detail) {
     if (!feedbackEl) return;
-    feedbackEl.textContent = '\u201E' + msg + '\u201C'; // „msg"
+    var html = '\u201E' + msg + '\u201C'; // „msg"
+    if (detail) {
+      html += '<span class="modal-detail">' + detail + '</span>';
+    }
+    feedbackEl.innerHTML = html;
     feedbackEl.className = 'modal-feedback' + (isError ? ' is-error' : '');
   }
 
@@ -233,7 +242,7 @@
     var code = inputEl.value.trim().toUpperCase().replace(/\s/g, '');
 
     if (!FRAGMENT_RE.test(code)) {
-      setFeedback('Ungültiger Code. 6–8 Zeichen (A–Z, 0–9).', true);
+      setFeedback('Unbekannte Kennung. Prüf das Fragment noch einmal.', true);
       inputEl.focus();
       return;
     }
@@ -241,11 +250,11 @@
     // Persist in localStorage (client-side only, no transmission)
     localStorage.setItem(LS_KEY, code);
 
-    var response = CODE_MAP.hasOwnProperty(code)
-      ? CODE_MAP[code]
-      : 'Fragment erkannt.';
-
-    setFeedback(response, false);
+    if (CODE_MAP.hasOwnProperty(code)) {
+      setFeedback(CODE_MAP[code], false, SHARED_DETAIL);
+    } else {
+      setFeedback('Das Fragment ist unbekannt.', false);
+    }
   }
 
   // Wire up events

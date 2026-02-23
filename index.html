@@ -23,20 +23,45 @@
 
       <!-- Abstract fragment shape — decorative only -->
       <div class="fragment-mark" aria-hidden="true">
-        <svg viewBox="0 0 100 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <svg viewBox="-8 -2 116 124" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <!-- Ghost fill — the complete shape, softly present -->
           <polygon
             points="50,4 94,28 84,88 50,114 8,86 6,36"
-            fill="currentColor" fill-opacity="0.12"
-            stroke="currentColor" stroke-width="1" stroke-opacity="1"
+            fill="currentColor" fill-opacity="0.15"
+            stroke="none"
           />
-          <!-- Facet lines suggesting a cut crystal -->
+          <!-- Present edges: F→A→B (right side B→C is missing) -->
+          <polyline
+            points="6,36 50,4 94,28"
+            stroke="currentColor" stroke-width="1.2" stroke-opacity="1"
+            stroke-linecap="round" stroke-linejoin="round" fill="none"
+          />
+          <!-- Present edges: C→D→E (left side E→F is missing) -->
+          <polyline
+            points="84,88 50,114 8,86"
+            stroke="currentColor" stroke-width="1.2" stroke-opacity="1"
+            stroke-linecap="round" stroke-linejoin="round" fill="none"
+          />
+          <!-- Interior facets -->
           <line x1="50" y1="4"  x2="8"  y2="86" stroke="currentColor" stroke-width="0.5" stroke-opacity="0.55"/>
           <line x1="94" y1="28" x2="6"  y2="36" stroke="currentColor" stroke-width="0.4" stroke-opacity="0.4"/>
+          <!-- Shard: drifted right, from where B→C was -->
+          <polygon
+            points="102,26 93,91 108,58"
+            fill="currentColor" fill-opacity="0.09"
+            stroke="currentColor" stroke-width="0.9" stroke-opacity="0.72"
+          />
+          <!-- Shard: drifted left, from where E→F was -->
+          <polygon
+            points="-2,34 -1,88 -8,61"
+            fill="currentColor" fill-opacity="0.09"
+            stroke="currentColor" stroke-width="0.9" stroke-opacity="0.72"
+          />
         </svg>
       </div>
 
       <h1 class="headline" id="site-title">Das blaue Element</h1>
-      <p class="subline">Eine Einladung. Ein Fragment. Eine Verwandlung.</p>
+      <p class="subline">Ein Fragment. Eine Einladung. Ein großes Ganzes.</p>
 
       <button
         class="btn btn-primary"
@@ -107,10 +132,8 @@
     <div class="container">
       <ul class="hints-list">
         <li class="hint">Ein Element verbindet alles.</li>
-        <li class="hint">Farbe ist nur der Anfang.</li>
-        <li class="hint">Ein Impuls verändert die Richtung.</li>
-        <li class="hint">Bring dein Fragment mit.</li>
-        <li class="hint">Manche Dinge offenbaren sich erst in der Mitte.</li>
+        <li class="hint">Kein Fragment ist allein vollständig.</li>
+        <li class="hint">Das Fragment kennt seinen Weg.</li>
       </ul>
     </div>
   </section>
@@ -126,9 +149,7 @@
         <p class="arrival-date" id="arrival-date">—</p>
         <p class="arrival-time" id="arrival-time">—</p>
         <ul class="arrival-mood" aria-label="Hinweise zur Ankunft">
-          <li>pünktlich.</li>
-          <li>offen für überraschungen.</li>
-          <li>ein blaues detail ist willkommen.</li>
+          <li>Ein blaues Detail verrät dich.</li>
         </ul>
       </div>
     </div>
@@ -140,17 +161,27 @@
        ═══════════════════════════════════════════ -->
   <footer class="footer">
     <div class="container">
-      <!-- Smaller echo of the fragment mark -->
+      <!-- Smaller echo of the fragment mark — same two sides missing -->
       <div class="footer-fragment" aria-hidden="true">
-        <svg viewBox="0 0 100 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <svg viewBox="-8 -2 116 124" fill="none" xmlns="http://www.w3.org/2000/svg">
           <polygon
             points="50,4 94,28 84,88 50,114 8,86 6,36"
-            fill="currentColor" fill-opacity="0.02"
-            stroke="currentColor" stroke-width="0.8" stroke-opacity="1"
+            fill="currentColor" fill-opacity="0.08"
+            stroke="none"
+          />
+          <polyline
+            points="6,36 50,4 94,28"
+            stroke="currentColor" stroke-width="1.8" stroke-opacity="1"
+            stroke-linecap="round" stroke-linejoin="round" fill="none"
+          />
+          <polyline
+            points="84,88 50,114 8,86"
+            stroke="currentColor" stroke-width="1.8" stroke-opacity="1"
+            stroke-linecap="round" stroke-linejoin="round" fill="none"
           />
         </svg>
       </div>
-      <p class="footer-note">Weitere Informationen werden nicht digital geteilt.</p>
+      <p class="footer-note">Das Wesentliche überträgt sich nicht.</p>
     </div>
   </footer>
 
@@ -174,20 +205,40 @@
 
       <!-- Fragment icon inside the modal -->
       <div class="modal-fragment-icon" aria-hidden="true">
-        <svg viewBox="0 0 100 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <svg viewBox="-8 -2 116 124" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <!-- Ghost fill -->
           <polygon
             points="50,4 94,28 84,88 50,114 8,86 6,36"
-            fill="currentColor" fill-opacity="0.06"
-            stroke="currentColor" stroke-width="0.8" stroke-opacity="0.75"
+            fill="currentColor" fill-opacity="0.10"
+            stroke="none"
           />
+          <!-- Present edges: F→A→B -->
+          <polyline
+            points="6,36 50,4 94,28"
+            stroke="currentColor" stroke-width="1.4" stroke-opacity="0.9"
+            stroke-linecap="round" stroke-linejoin="round" fill="none"
+          />
+          <!-- Present edges: C→D→E -->
+          <polyline
+            points="84,88 50,114 8,86"
+            stroke="currentColor" stroke-width="1.4" stroke-opacity="0.9"
+            stroke-linecap="round" stroke-linejoin="round" fill="none"
+          />
+          <!-- Interior facet -->
           <line x1="50" y1="4" x2="8" y2="86"
-                stroke="currentColor" stroke-width="0.35" stroke-opacity="0.35"/>
+                stroke="currentColor" stroke-width="0.5" stroke-opacity="0.4"/>
+          <!-- Shard: drifted right -->
+          <polygon
+            points="102,26 93,91 108,58"
+            fill="currentColor" fill-opacity="0.09"
+            stroke="currentColor" stroke-width="1.1" stroke-opacity="0.65"
+          />
         </svg>
       </div>
 
       <h2 id="modal-title">Fragment registrieren</h2>
       <p id="modal-desc" class="modal-desc">
-        Gib deinen persönlichen Fragment-Code ein.
+        Dein Fragment ist ein Teil. Bring es dorthin, wo das Ganze entsteht.
       </p>
 
       <div class="modal-form">
@@ -204,7 +255,7 @@
           aria-label="Fragment-Code, 6 bis 8 Zeichen, A bis Z und 0 bis 9"
         >
         <button class="btn btn-primary btn-full" id="btn-fragment-submit">
-          Bestätigen
+          Übergeben
         </button>
       </div>
 
