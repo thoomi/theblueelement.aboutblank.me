@@ -4,11 +4,6 @@
  * Fully static. No external dependencies. No data transmission.
  * Fragment codes are stored in localStorage only.
  *
- * ─── URL Parameters ──────────────────────────────────────────────────
- *  ?t=ISO_DATE_STRING   Target date/time (Europe/Berlin timezone recommended)
- *                       Example: ?t=2026-03-14T19:00:00+01:00
- *  ?title=TEXT          Optional custom page title
- *
  * ─── GitHub Pages Deployment ─────────────────────────────────────────
  *  1. Create a new GitHub repository (public or private with Pages enabled).
  *  2. Upload index.html, styles.css, and app.js to the root of the main branch.
@@ -52,30 +47,7 @@
   var FRAGMENT_RE = /^[A-Z0-9]{6,8}$/;
 
 
-  /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-     URL Parameter Parsing
-     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
-
-  var params = new URLSearchParams(location.search);
-
-  // Optional custom title
-  var titleParam = params.get('title');
-  if (titleParam && titleParam.trim()) {
-    var headingEl = document.getElementById('site-title');
-    if (headingEl) headingEl.textContent = titleParam.trim();
-    document.title = titleParam.trim();
-  }
-
-  // Target event date — fall back gracefully on any parse error
-  var target;
-  try {
-    var raw = params.get('t') || DEFAULT_ISO;
-    var parsed = new Date(raw);
-    if (isNaN(parsed.getTime())) throw new Error('invalid date');
-    target = parsed;
-  } catch (_) {
-    target = new Date(DEFAULT_ISO);
-  }
+  var target = new Date(DEFAULT_ISO);
 
 
   /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━

@@ -35,23 +35,6 @@ s.serve(port=8080, root='.')
 
 ---
 
-## URL parameters
-
-| Parameter | Description | Example |
-|-----------|-------------|---------|
-| `?t=` | Target date (ISO 8601) | `?t=2026-03-14T19:00:00+01:00` |
-| `?title=` | Custom page title | `?title=Das%20blaue%20Element` |
-
-Missing or invalid values fall back to the defaults in `app.js`.
-
-**Test URLs:**
-```
-http://localhost:8080/?t=2026-03-14T19:00:00+01:00   # countdown
-http://localhost:8080/?t=2020-01-01T00:00:00Z        # triggers "Es beginnt."
-```
-
----
-
 ## Fragment codes
 
 Codes are validated client-side only — nothing is transmitted. The registered code is stored in `localStorage` under `dbe_fragmentCode`.
