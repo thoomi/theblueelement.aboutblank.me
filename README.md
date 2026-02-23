@@ -18,48 +18,20 @@ app.js       — countdown, fragment modal, URL parameter handling
 
 ## Local development
 
-### Quick start (no setup)
-
 ```bash
 python3 -m http.server 8080
 ```
 
-Open **http://localhost:8080** — then `Ctrl+C` to stop.
-
-### With a virtual environment (livereload)
-
-Using a venv keeps the dev dependency isolated and gives you automatic
-browser refresh on every file save.
+Open **http://localhost:8080**. For auto-refresh on save, install `livereload` in a venv and run:
 
 ```bash
-# Create and activate the venv
-python3 -m venv .venv
-source .venv/bin/activate      # Windows: .venv\Scripts\activate
-
-# Install livereload
-pip install livereload
-
-# Start the dev server
 python3 -c "
 from livereload import Server
-server = Server()
-server.watch('*.html')
-server.watch('*.css')
-server.watch('*.js')
-server.serve(port=8080, root='.')
+s = Server()
+s.watch('*.html'); s.watch('*.css'); s.watch('*.js')
+s.serve(port=8080, root='.')
 "
 ```
-
-Open **http://localhost:8080** — the browser refreshes automatically whenever
-`index.html`, `styles.css`, or `app.js` is saved.
-
-To deactivate the venv when done:
-
-```bash
-deactivate
-```
-
-`.venv/` is intentionally not committed — add it to `.gitignore` if needed.
 
 ---
 
@@ -67,72 +39,57 @@ deactivate
 
 | Parameter | Description | Example |
 |-----------|-------------|---------|
-| `?t=` | Target event date (ISO 8601) | `?t=2026-03-14T19:00:00+01:00` |
+| `?t=` | Target date (ISO 8601) | `?t=2026-03-14T19:00:00+01:00` |
 | `?title=` | Custom page title | `?title=Das%20blaue%20Element` |
 
-Invalid or missing values fall back to the defaults defined at the top of `app.js`.
+Missing or invalid values fall back to the defaults in `app.js`.
 
-**Useful test URLs:**
+**Test URLs:**
 ```
-# Normal countdown
-http://localhost:8080/?t=2026-03-14T19:00:00+01:00
-
-# Trigger "Es beginnt." immediately (past date)
-http://localhost:8080/?t=2020-01-01T00:00:00Z
-
-# Invalid date → fallback to default
-http://localhost:8080/?t=garbage
+http://localhost:8080/?t=2026-03-14T19:00:00+01:00   # countdown
+http://localhost:8080/?t=2020-01-01T00:00:00Z        # triggers "Es beginnt."
 ```
 
 ---
 
 ## Fragment codes
 
-Codes are validated client-side only. No data is transmitted.
-Registered codes are stored in `localStorage` under the key `dbe_fragmentCode`.
+Codes are validated client-side only — nothing is transmitted. The registered code is stored in `localStorage` under `dbe_fragmentCode`.
 
-| Code | Response |
-|------|----------|
-| `BLAU01` | Das erste Fragment ist erkannt. |
-| `AZUR77` | Deine Farbe ist bekannt. |
-| `TIEFE8` | Du kommst aus der Tiefe. |
-| `MOND42` | Das Licht folgt dir. |
-| `KOBALT` | Die Schicht ist vollständig. |
-| *(any other valid code)* | Fragment erkannt. |
+| Code | Personal confirmation |
+|------|-----------------------|
+| `XZ7B4N` | Das erste Zeichen ist gesetzt. |
+| `KV3T9L` | Die Tiefe hat dich erkannt. |
+| `NW8Z2R` | Du trägst das richtige Licht. |
+| `4JT7VK` | Das Muster schließt sich. |
 
-Valid format: **6–8 characters, A–Z and 0–9.**
-To add or change codes, edit the `CODE_MAP` object in `app.js`.
+All four codes additionally show the shared detail line defined as `SHARED_DETAIL` in `app.js` — replace it with the real venue or instruction before distributing codes.
+
+Unknown valid codes (6–8 chars, A–Z and 0–9) return: *Das Fragment ist unbekannt.*
 
 ---
 
-## Changing the default event date
+## Before the event
 
-Edit the `DEFAULT_ISO` constant at the top of `app.js`:
+Two things to update in `app.js`:
 
-```js
-var DEFAULT_ISO = '2026-03-14T19:00:00+01:00';
-```
+1. **`DEFAULT_ISO`** — the event date/time:
+   ```js
+   var DEFAULT_ISO = '2026-03-14T19:00:00+01:00';
+   ```
+
+2. **`SHARED_DETAIL`** — the venue/address shown after a valid code:
+   ```js
+   var SHARED_DETAIL = 'Trag ein blaues Detail — Hemd, Schmuck, Accessoire.';
+   ```
 
 ---
 
-## Deploy to GitHub Pages
+## Deploy
 
 ```bash
-git add .
-git commit -m "Update"
-git push
+git add . && git commit -m "Update" && git push
 ```
 
-GitHub Pages rebuilds automatically on every push to `main`.
+GitHub Pages rebuilds automatically on push to `main`.
 Settings: **Repository → Settings → Pages → Source: main / root**
-
----
-
-## Accessibility
-
-- Semantic HTML5 landmarks and headings
-- `aria-live` on the countdown SR region (polite, every ~30 s)
-- `aria-live="assertive"` on the "Es beginnt." message
-- Native `<dialog>` element — focus trap and ESC handling built in
-- All interactive elements have `:focus-visible` rings
-- `prefers-reduced-motion` disables all CSS animations and JS transitions
